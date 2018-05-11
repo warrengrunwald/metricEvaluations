@@ -5,6 +5,10 @@ Created on Thu May 10 17:44:08 2018
 @author: wcgru
 """
 
+import pandas as pd
+
+pd.test()
+
 # Time vs. Entropy
 
 # Time vs. % Map Coverage (normalize based on final % map coverage?)
