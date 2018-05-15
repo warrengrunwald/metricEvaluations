@@ -28,7 +28,7 @@ def plot_gmapping_entropy(pd_data, title):
     minTimeStamp = pd_data['rosbagTimestamp'].min()
     
     pd_data['rosbagTimestamp'] = pd_data['rosbagTimestamp'] - minTimeStamp
-    
+
     fig = plt.figure()
     ax = fig.add_subplot(111)
     ax.plot(pd_data['rosbagTimestamp'],pd_data['data'])
@@ -79,9 +79,36 @@ cmd_vel_data = create_pd_data(rel_path, csv_filename, windowsFlag = True)
 title = 'Commanded Velocities - Nav Example'
 plot_cmd_vel(cmd_vel_data, title)
 
+
 # Time vs. % Map Coverage (normalize based on final % map coverage?)
+# need to update rel_path since _map is a large csv is not tracked on git
+rel_path = 'Ignored/'
+csv_filename = '_slash_nav_map.csv'
+
+map_data = create_pd_data(rel_path, csv_filename, windowsFlag = True)
+
+map_data_data = map_data['data']
+width = map_data['width'][0]
+height = map_data['height'][0]
 
 
+intial_map = np.asarray(list(map(int,map_data_data[0][1:-1].split(','))))
+
+reshaped = np.reshape(initial_map, (width,height))
+
+reshaped_cut = reshaped[150:250,150:250]
+fig = plt.figure()
+ax = fig.add_subplot(111)
+ax.contourf(reshaped_cut)
+ax.set_title('Map at initial timestep - Nav Example')
+ax.set_xlabel('Width')
+ax.set_ylabel('Height')
+
+
+#initial_map = np.reshape(np.asarray(map_data_data[0]),(width,height))
+#==============================================================================
+# print(map_data_data[0])
+#==============================================================================
 # Distance vs. Entropy
 
 # Distance vs. % Map Coverage
